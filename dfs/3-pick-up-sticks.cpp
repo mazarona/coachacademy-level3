@@ -11,29 +11,24 @@ const int N = 1e6 + 1;
 vector<int> adj[N];
 bool visited[N];
 
-stack<int> ts;
-vector<int> path;
-
 // does it have a cycle
-bool dfs(int p)
+vector<int> path;
+bool dfs(int u, int parent)
 {
   bool hasCycle = false;
-  visited[p] = true;
-  for (auto c : adj[p])
+  visited[u] = true;
+  for (auto v : adj[u])
   {
-    if (!visited[c])
+    if (!visited[v])
     {
-      path.push_back(c);
-      hasCycle |= dfs(c);
-      path.pop_back();
+      path.push_back(v);
+      hasCycle |= dfs(v, u);
     }
-    else
+    else if (v != parent)
     {
-      if (find(path.begin(), path.end(), c) != path.end())
-        hasCycle = true;
+      hasCycle = true;
     }
   }
-  ts.push(p);
   return hasCycle;
 }
 
@@ -53,9 +48,6 @@ int main()
       adj[i].clear();
       visited[i] = false;
     }
-    path.clear();
-    while (!ts.empty())
-      ts.pop();
 
     for (int i = 0; i < m; i++)
     {
@@ -69,8 +61,9 @@ int main()
     {
       if (!visited[i])
       {
+        path.clear();
         path.push_back(i);
-        hasCycle |= dfs(i);
+        hasCycle |= dfs(i, 0);
       }
     }
 
@@ -78,11 +71,8 @@ int main()
       cout << "IMPOSSIBLE" << endl;
     else
     {
-      while (!ts.empty())
-      {
-        cout << ts.top() << endl;
-        ts.pop();
-      }
+      for (auto x : path)
+        cout << x << endl;
     }
   }
 

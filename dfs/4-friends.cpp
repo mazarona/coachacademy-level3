@@ -1,3 +1,5 @@
+// problem link: https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1549
+
 #include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
@@ -53,7 +55,7 @@ int main()
     for (int i = 1; i <= n; i++)
     {
       if (!vis[i])
-        ans = max(ans, dfs(i));
+        ans = max(ans, dfs(1, 1));
     }
 
     cout << ans << endl;
