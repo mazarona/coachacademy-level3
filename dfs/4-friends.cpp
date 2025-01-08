@@ -55,7 +55,7 @@ int main()
     for (int i = 1; i <= n; i++)
     {
       if (!vis[i])
-        ans = max(ans, dfs(1, 1));
+        ans = max(ans, dfs(i));
     }
 
     cout << ans << endl;
